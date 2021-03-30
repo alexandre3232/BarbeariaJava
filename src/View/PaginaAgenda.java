@@ -14,10 +14,14 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.AgendaController;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import javax.swing.border.BevelBorder;
 
 public class PaginaAgenda extends JFrame {
 
@@ -26,7 +30,8 @@ public class PaginaAgenda extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTable table;
+	private final AgendaController controller;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -48,17 +53,26 @@ public class PaginaAgenda extends JFrame {
 	 * Create the frame.
 	 */
 	public PaginaAgenda() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 564, 618);
+		
+		
+		this.controller = new AgendaController(this);
+		iniciar();
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(500, 500, 564, 618);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		table_1 = new JTable();
+		table_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		table_1.setBackground(Color.WHITE);
+		table_1.setForeground(Color.WHITE);
+		table_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"01", "alexandre", "cabelo", "20", "12/08", "12:00", null},
+				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
@@ -67,8 +81,9 @@ public class PaginaAgenda extends JFrame {
 				"ID", "Cliente", "Servi\u00E7o", "Valor", "Data", "Hora", "Observa\u00E7\u00E3o"
 			}
 		));
-		table.setBounds(61, 534, 467, -183);
-		contentPane.add(table);
+		table_1.getColumnModel().getColumn(6).setPreferredWidth(174);
+		table_1.setBounds(10, 546, 528, -161);
+		contentPane.add(table_1);
 		
 		JLabel lblNewLabel_9 = new JLabel("Agenda");
 		lblNewLabel_9.setFont(new Font("Arial Black", Font.BOLD, 15));
@@ -160,12 +175,27 @@ public class PaginaAgenda extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(PaginaAgenda.class.getResource("/imagem/Agenda-PainelFundo.png")));
-		lblNewLabel_1.setBounds(0, 48, 528, 416);
+		lblNewLabel_1.setBounds(0, 47, 528, 416);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(PaginaAgenda.class.getResource("/imagem/AgendaFundo.png")));
 		lblNewLabel.setBounds(0, 0, 548, 579);
 		contentPane.add(lblNewLabel);
+	
+}
+
+	private void iniciar() {
+		this.controller.atualizaTabela();
+		
 	}
+
+	public JTable getTable_1() {
+		return table_1;
+	}
+
+	public void setTable_1(JTable table_1) {
+		this.table_1 = table_1;
+	}
+	
 }
